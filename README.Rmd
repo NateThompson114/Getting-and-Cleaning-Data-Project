@@ -1,4 +1,6 @@
-## Getting and Cleaning Data Project
+Getting and Cleaning Data Project
+=================================
+
 * download commands.R and run as source("commands.R") //this will attempt to use your root folder for R '~' then checks for a folder named outputDirectory, if not director it attempts to create it, then assigns it as your working directory, then downloads the data from the course link, http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip, downloads run_analysis, then runs it, and displays the results.
 
 --or--
