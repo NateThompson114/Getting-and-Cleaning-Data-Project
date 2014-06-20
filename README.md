@@ -1,0 +1,28 @@
+Getting and Cleaning Data Project
+=================================
+
+* download commands.R and run as source("commands.R") //this will attempt to use your root folder for R '~' then checks for a folder named outputDirectory, if not director it attempts to create it, then assigns it as your working directory, then downloads the data from the course link, http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip, downloads run_analysis, then runs it, and displays the results.
+
+--or--
+
+* Unzip the source
+  ( https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip )
+
+  into a folder on your local drive, say ~\data\UCI HAR Dataset\
+
+* Put run_analysis.R to  root
+
+* then: source("run_analysis.R")
+
+* The script will read the dataset and write these files:
+
+  cleaned.txt  -- 8.35 Mb, a 10299x68 data frame
+
+  Average_cleaned.txt  -- 0.225 Mb, a 180x68 data frame
+
+*Use the following commands to view the output tables 
+Average_cleaned <- read.table("~/outputDirectory/Average_cleaned.txt", header=T, quote="\"")
+View(Average_cleaned)
+
+cleaned <- read.table("~/outputDirectory/cleaned.txt", header=T, quote="\"")
+View(cleaned)
