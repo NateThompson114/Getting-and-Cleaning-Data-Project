@@ -1,26 +1,25 @@
-wd <- "C:/Program Files/R/Coursera114/this/is/a/test/"
-if (!file.exists(wd)){
-        dir.create(wd)
+mainDir <- "~"
+subDir <- "outputDirectory"
+
+if (file.exists(paste(mainDir, subDir, "/", sep = "/", collapse = "/"))) {
+        cat("subDir exists in mainDir and is a directory")
+} else if (file.exists(paste(mainDir, subDir, sep = "/", collapse = "/"))) {
+        cat("subDir exists in mainDir but is a file")
+        # you will probably want to handle this separately
+} else {
+        cat("subDir does not exist in mainDir - creating")
+        dir.create(file.path(mainDir, subDir))
 }
-setwd(wd)
 
-d <- as.character("Getting and Cleaning Data Project") #d represents the data folder inside "" and should be named accodingly
+if (file.exists(paste(mainDir, subDir, "/", sep = "/", collapse = "/"))) {
+        # By this point, the directory either existed or has been successfully created
+        setwd(file.path(mainDir, subDir))
+} else {
+        cat("subDir does not exist")
+        # Handle this error as appropriate
+}
 
-if (!file.exists(d)){
-        dir.create(d)
-} # Checks for folder d, if it does not exsist it creates it
-
-fwd <- paste(wd, d, sep='') # Combines folder name with directory to create workspace
-
-setwd(fwd) # Setting final directory
-
-getwd() # Checking final directory
-
-list.files(fwd) # Checking for files listed 
-
-temp <- tempfile()
-download.file("http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", temp)
-unzip(temp, exdir="data")
+setwd(subDir)
 
 download <- function(url, ...) {
         # First, check protocol. If http or https, check platform:
@@ -71,6 +70,16 @@ download <- function(url, ...) {
         }
 }
 
-download("https://raw.githubusercontent.com/NateThompson114/Getting-and-Cleaning-Data-Project/master/run_analysis.R", "run_analysis.R")
+temp <- tempfile()
+download("http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", temp)
+unzip(temp, exdir="data")
 
-source("run_analysis.R")
+download("https://raw.githubusercontent.com/NateThompson114/Getting-and-Cleaning-Data-Project/master/run_analysis.R", "run_analysis.R")# downloading run_analysis
+
+source("run_analysis.R")# running run_analysis
+
+Average_cleaned <- read.table("~/outputDirectory/Average_cleaned.txt", header=T, quote="\"")
+View(Average_cleaned)
+
+cleaned <- read.table("~/outputDirectory/cleaned.txt", header=T, quote="\"")
+View(cleaned)
