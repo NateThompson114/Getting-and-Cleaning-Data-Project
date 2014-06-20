@@ -1,32 +1,39 @@
 Getting and Cleaning Data Project
 ========================================================
 *__By Nate Thompson__*
+***
+Source of the original data: **https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip** 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+Original description: **http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones**
+***
+The attached R script (*run_analysis.R*) performs the following to clean up the data:
 
-When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+1. Merges the training and test sets to create one data set:
+ * train/X_train.txt with test/X_test.txt -- the result is a 10299 x 561 data frame, as in the original description ("Number of Instances: 10299" and "Number of Attributes: 561")
+ * train/subject_train.txt with test/subject_test.txt -- the result is a 10299 x 1 data frame with subject IDs,
+ * train/y_train.txt with test/y_test.txt -- the result is also a 10299 x 1 data frame with activity IDs.
 
+2. Reads file features.txt and extracts only the measurements on the mean and standard deviation for each measurement.
+The result is a 10299 x 66 data frame, because only 66 out of 561 attributes are measurements on the mean and standard deviation. All measurements appear to be floating point numbers in the range (-1, 1).
 
-```r
-summary(cars)
-```
+3. Reads activity_labels.txt and applies descriptive activity names to name the activities in the data set:
+walking
+ * walkingupstairs
+ * walkingdownstairs
+ * sitting
+ * standing
+ * laying
 
-```
-##      speed           dist    
-##  Min.   : 4.0   Min.   :  2  
-##  1st Qu.:12.0   1st Qu.: 26  
-##  Median :15.0   Median : 36  
-##  Mean   :15.4   Mean   : 43  
-##  3rd Qu.:19.0   3rd Qu.: 56  
-##  Max.   :25.0   Max.   :120
-```
+4. The script also appropriately labels the data set with descriptive names: all feature names (attributes) and activity names are converted to lower case, underscores and brackets () are removed.
+Then it merges the 10299x66 data frame containing features with 10299x1 data frames containing activity labels and subject IDs.The result is saved as cleaned.txt, a 10299x68 data frame such that the first column contains subject IDs, the second column activity names, and the last 66 columns are measurements. Subject IDs are integers between 1 and 30 inclusive. Names of the attributes are similar to the following:
+ * tbodyacc-mean-x
+ * tbodyacc-mean-y
+ * tbodyacc-mean-z
+ * tbodyacc-std-x
+ * tbodyacc-std-y
+ * tbodyacc-std-z
+ * tgravityacc-mean-x
+ * tgravityacc-mean-y
 
-You can also embed plots, for example:
-
-
-```r
-plot(cars)
-```
-
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
-
+5. Finally, the script creates a 2nd, independent tidy data set with the average of each measurement for each activity and each subject.
+The result is saved as Average_cleaned.txt, a 180x68 data frame, where as before, the first column contains subject IDs, the second column contains activity names (see below), and then the averages for each of the 66 attributes are in columns 3...68. There are 30 subjects and 6 activities, thus 180 rows in this data set with averages.

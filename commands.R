@@ -1,3 +1,4 @@
+setwd("~")
 mainDir <- "~"
 subDir <- "outputDirectory"
 
@@ -71,7 +72,7 @@ download <- function(url, ...) {
 }
 
 temp <- tempfile()
-download("http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", temp)
+download("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", temp)
 unzip(temp, exdir="data")
 
 download("https://raw.githubusercontent.com/NateThompson114/Getting-and-Cleaning-Data-Project/master/run_analysis.R", "run_analysis.R")# downloading run_analysis
